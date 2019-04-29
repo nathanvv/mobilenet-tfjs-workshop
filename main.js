@@ -31,7 +31,7 @@ function setup() {
 
   async function classifyImage() {
     let predictions = [];
-    // TODO - (2) - Pass the canvas to mobile net and get the predictionss
+    // TODO - (2) - Pass the canvas to mobile net and get the predictions
     predictions = await model.classify(canvas);
     displayPredictions(predictions);
   }
