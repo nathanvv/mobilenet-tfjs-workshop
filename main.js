@@ -9,7 +9,7 @@ function setup() {
     video.srcObject = stream;
     await video.play();
 
-    setInterval(() => takeSnapshot(), 1000);
+    setInterval(() => takeSnapshot(), 5000);
   }
 
   function takeSnapshot() {
@@ -32,20 +32,26 @@ function setup() {
   async function classifyImage() {
     let predictions = [];
     // TODO - (2) - Pass the canvas to mobile net and get the predictionss
-
+    predictions = await model.classify(canvas);
     displayPredictions(predictions);
   }
 
   function displayPredictions(predictions) {
     let val = "";
+    console.log(predictions);
 
     // TODO - (3) - Pretty print the predictions and display on the screen
-
+    for ( prediction of predictions) {
+      let perc = ( prediction.probability * 100).toFixed(2);
+      val += `${perc}% | ${prediction.className} \n`
+      console.log(val);
+    }
     pre.innerHTML = val;
   }
 
   async function main() {
     // TODO - (1) - Load MobileNet then start the camera
+    model = await mobilenet.load();
     await startCamera();
   }
   main();
